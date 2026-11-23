@@ -53,6 +53,7 @@ public enum ProviderIdentifier: String, Sendable, Codable, CaseIterable {
     case claude
     case codex
     case cursor
+    case antigravity
     case grok
 
     public var displayName: String {
@@ -60,6 +61,7 @@ public enum ProviderIdentifier: String, Sendable, Codable, CaseIterable {
         case .claude: "Claude"
         case .codex: "Codex"
         case .cursor: "Cursor"
+        case .antigravity: "Antigravity"
         case .grok: "Grok"
         }
     }

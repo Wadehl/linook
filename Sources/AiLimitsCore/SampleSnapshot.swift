@@ -43,6 +43,30 @@ public extension RateLimitSnapshot {
                     updatedAt: Date()
                 ),
                 ProviderLimits(
+                    provider: .antigravity,
+                    buckets: [
+                        RateLimitBucket(
+                            name: "Gemini · 5 小时",
+                            window: RateLimitWindow(usedPercent: 12, windowMinutes: 300, resetsAt: nil, resetDescription: "46 分钟")
+                        ),
+                        RateLimitBucket(
+                            name: "Gemini · 7 天",
+                            window: RateLimitWindow(usedPercent: 18, windowMinutes: 10080, resetsAt: nil, resetDescription: "6 天")
+                        ),
+                        RateLimitBucket(
+                            name: "Claude / GPT · 5 小时",
+                            window: RateLimitWindow(usedPercent: 0, windowMinutes: 300, resetsAt: nil, resetDescription: "5 小时")
+                        ),
+                        RateLimitBucket(
+                            name: "Claude / GPT · 7 天",
+                            window: RateLimitWindow(usedPercent: 51, windowMinutes: 10080, resetsAt: nil, resetDescription: "3 天")
+                        )
+                    ],
+                    planType: "Pro",
+                    status: .ok,
+                    updatedAt: Date()
+                ),
+                ProviderLimits(
                     provider: .grok,
                     buckets: [
                         RateLimitBucket(

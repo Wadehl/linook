@@ -2,6 +2,13 @@
 
 本文件记录狸记额度（Linook，旧名 AiLimits）每个版本的变化，格式参考 [Keep a Changelog](https://keepachangelog.com/zh-CN/1.1.0/)，版本号遵循[语义化版本](https://semver.org/lang/zh-CN/)。
 
+## [0.4.0] - 2026-11-23
+
+### 新增
+
+- Antigravity 卡片：读取 Antigravity 客户端本机语言服务给出的额度，展示「Gemini」「Claude / GPT」「Gemini 4 Argon」各组的 5 小时与 7 天窗口，套餐与账号来自同一个接口。需要在 Antigravity 运行时读取，客户端没有运行时这张卡片不出现。
+- Antigravity 图标，取自 LobeHub 图标库。
+
 ## [0.3.1] - 2026-10-30
 
 ### 修复
