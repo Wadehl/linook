@@ -22,7 +22,7 @@ struct WidgetLayoutTests {
     @Test("按消耗最高的窗口从高到低排")
     func rankedOrder() {
         let ranked = WidgetLayout.ranked(.sample)
-        #expect(ranked.map(\.provider) == [.codex, .cursor, .claude, .grok])
+        #expect(ranked.map(\.provider) == [.codex, .cursor, .antigravity, .claude, .grok])
     }
 
     @Test("本机取不到数据的账号不占格子")
@@ -81,8 +81,8 @@ struct WidgetLayoutTests {
     func hiddenProviderExcluded() {
         var settings = DisplaySettings()
         settings.setVisible(false, for: .codex)
-        #expect(WidgetLayout.ranked(.sample, using: settings).map(\.provider) == [.cursor, .claude, .grok])
-        #expect(WidgetLayout.visible(.sample, family: .systemLarge, using: settings).count == 3)
+        #expect(WidgetLayout.ranked(.sample, using: settings).map(\.provider) == [.cursor, .antigravity, .claude, .grok])
+        #expect(WidgetLayout.visible(.sample, family: .systemLarge, using: settings).count == 4)
     }
 
     @Test("设置里关掉的额度窗口不进入格子")
@@ -99,6 +99,6 @@ struct WidgetLayoutTests {
         for window in WidgetLayout.ranked(.sample).first(where: { $0.provider == .grok })?.orderedWindows ?? [] {
             settings.setWindowVisible(false, key: window.key, for: .grok)
         }
-        #expect(WidgetLayout.ranked(.sample, using: settings).map(\.provider) == [.codex, .cursor, .claude])
+        #expect(WidgetLayout.ranked(.sample, using: settings).map(\.provider) == [.codex, .cursor, .antigravity, .claude])
     }
 }

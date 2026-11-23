@@ -17,6 +17,10 @@ extension CursorLimitsProvider: LimitsProvider {
     public var identifier: ProviderIdentifier { .cursor }
 }
 
+extension AntigravityLimitsProvider: LimitsProvider {
+    public var identifier: ProviderIdentifier { .antigravity }
+}
+
 extension GrokLimitsProvider: LimitsProvider {
     public var identifier: ProviderIdentifier { .grok }
 }
@@ -31,8 +35,9 @@ public struct LimitsService: Sendable {
         async let claude = result(of: ClaudeLimitsProvider())
         async let codex = result(of: CodexLimitsProvider())
         async let cursor = result(of: CursorLimitsProvider())
+        async let antigravity = result(of: AntigravityLimitsProvider())
         async let grok = result(of: GrokLimitsProvider(excludingGrokBotAccounts: cursorAccounts))
-        let providers = await [claude, codex, cursor, grok]
+        let providers = await [claude, codex, cursor, antigravity, grok]
         return RateLimitSnapshot(providers: providers, fetchedAt: Date())
     }
 

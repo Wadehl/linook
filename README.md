@@ -4,7 +4,7 @@ macOS 菜单栏与桌面小组件，用来看本机各个 Agent 账号的额度�
 
 旧名 AiLimits。源码里的模块与目标名仍然沿用 `AiLimits*`，不影响使用。
 
-支持 Claude、Codex、Cursor、Grok 四种账号。凭据从本机已经登录的客户端里读取，再向各自的官方接口查询额度，过程中不需要手动填写任何密钥。
+支持 Claude、Codex、Cursor、Antigravity、Grok 五种账号。凭据从本机已经登录的客户端里读取，再向各自的官方接口查询额度，过程中不需要手动填写任何密钥。
 
 ## 界面
 
@@ -53,6 +53,13 @@ macOS 菜单栏与桌面小组件，用来看本机各个 Agent 账号的额度�
 - 额度接口：`cursor.com/api/usage-summary`
 - GrokBot 的每周额度由 Cursor 账号后台一并给出，地址是 `api2.cursor.sh/aiserver.v1.DashboardService/GetSandUsageStatus`；账号没有 GrokBot 额度时这一项不显示
 
+**Antigravity**
+
+- 来源：Antigravity 客户端启动的本机语言服务。客户端在 `~/.gemini/antigravity/daemon/hub_<端口>.json` 里写下监听端口与 CSRF 令牌，可以用环境变量 `ANTIGRAVITY_DAEMON_DIR` 换到别的目录
+- 额度接口：本机语言服务的 `GetUserStatus`（账号与套餐）与 `RetrieveUserQuotaSummary`（分组额度）
+- 分组按客户端自己的划分：「Gemini」「Claude / GPT」「Gemini 4 Argon」，每组给出 5 小时与 7 天窗口，只展示接口实际返回的窗口
+- 需要打开 Antigravity：客户端没有运行时本机没有可读的额度，这张卡片不会出现
+
 **Grok**
 
 - 凭据：`$GROK_HOME/auth.json`，默认 `~/.grok/auth.json`
@@ -85,7 +92,7 @@ macOS 菜单栏与桌面小组件，用来看本机各个 Agent 账号的额度�
 
 发布包里的小组件与应用之间不经过应用组共享数据：应用把快照写到 `~/Library/Application Support/AiLimits/snapshot.json`，小组件扩展凭沙盒的只读例外读取这个目录。macOS 15 起系统按开发者团队编号校验应用组，临时签名的小组件扩展访问应用组会被直接拒绝，所以发布包改用这个位置。
 
-面板、菜单栏与小组件共用一份显示设置，写在同一个目录的 `display-settings.json`。文件不存在、还是旧版本写下的、或者缺少某一项时，按全部展示处理。设置里关掉的账号用账号标识记录，关掉的额度用窗口标识记录：5 小时、7 天、月度分别是 `session`、`weekly`、`monthly`，其余额度用接口返回的名称（例如 `Cursor Models`、`GrokBot · 7 天`）。
+面板、菜单栏与小组件共用一份显示设置，写在同一个目录的 `display-settings.json`。文件不存在、还是旧版本写下的、或者缺少某一项时，按全部展示处理。设置里关掉的账号用账号标识记录，关掉的额度用窗口标识记录：5 小时、7 天、月度分别是 `session`、`weekly`、`monthly`，其余额度用接口返回的名称（例如 `Cursor Models`、`GrokBot · 7 天`、`Gemini · 5 小时`）。
 
 1. 完成上面的安装，确认已经去掉隔离标记。
 2. 打开应用，点开菜单栏面板，等第一次刷新完成。之后应当能看到快照文件：
@@ -189,7 +196,7 @@ README 里的面板与设置页图片由构建好的应用离屏渲染，参数�
 
 ## 项目结构
 
-- `Sources/AiLimitsCore` — 额度模型、四种账号的凭据读取与额度查询、应用组共享文件的读写
+- `Sources/AiLimitsCore` — 额度模型、五种账号的凭据读取与额度查询、应用组共享文件的读写
 - `Sources/AiLimitsUI` — 设计系统的配色与字体、进度条、小组件版面
 - `Sources/AiLimitsApp` — 菜单栏应用与下拉面板
 - `Sources/AiLimitsWidget` — 桌面小组件扩展
